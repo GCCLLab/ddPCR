@@ -1,0 +1,76 @@
+---
+title: "Statistics for ddPCR"
+author: "Kyungmin In, GCCL"
+date: "2025-06-01"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  set in the _output.yml file.
+  The HTML output format for this example is bookdown::gitbook,
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+# Introduction to Digital PCR (ddPCR) {.unnumbered}
+
+Digital PCR (**ddPCR**) is a cutting-edge, highly sensitive technique that offers a more precise method for measuring nucleic acids compared to traditional quantitative PCR (qPCR).
+It works by partitioning a sample into thousands of individual reactions, effectively counting the number of positive and negative droplets that contain specific DNA or RNA sequences.
+This method allows for the absolute quantification of genetic material without the need for a standard curve or external calibration, which is typically required in qPCR.
+The ability of ddPCR to quantify gene copy numbers without calibration stems from its unique principle of directly counting individual molecules.
+Instead of relying on relative changes in fluorescence intensity, ddPCR uses Poisson statistics to determine the exact number of target DNA copies in a sample based on the fraction of droplets that test positive for the target sequence.
+This feature makes ddPCR especially valuable in applications where high precision is needed, such as gene expression analysis, rare allele detection, and the measurement of gene copy number variations (**CNVs**).
+Furthermore, ddPCR is not influenced by factors such as amplification efficiency, which can often introduce errors in traditional PCR-based methods.
+As a result, ddPCR is considered a gold standard for precise, reproducible measurements of gene copy numbers, providing an unparalleled level of accuracy in quantification.
+
+**Poisson Distribution in ddPCR for Quantifying Gene Copy Numbers** 
+
+One of the key mathematical foundations of ddPCR is the application of the **Poisson distribution**, which is used to model the random distribution of target DNA molecules into individual reaction partitions (droplets).
+This distribution allows ddPCR to calculate the number of DNA copies present in a sample without a calibration curve, making it an exceptionally accurate and reliable method for quantification.
+
+In ddPCR, a sample is partitioned into thousands of microdroplets, and each droplet undergoes PCR amplification.
+The number of droplets that contain the target DNA is recorded, and using the Poisson distribution, the concentration of the target DNA can be calculated.
+The Poisson distribution models the probability of a given number of occurrences (in this case, the number of DNA molecules) within a fixed interval (the volume of each droplet), assuming the events (molecules of DNA) happen independently and randomly.
+The formula for the Poisson distribution is:
+
+$$ P(k)= e^{-\lambda} \cdot\frac{\lambda^k}{k!}$$
+
+Where:
+
+-   P(k): the probability of observing exactly k target DNA molecules in a droplet
+
+-   $\lambda$: the expected average number of DNA molecules in a droplet which we aim to estimate
+
+-   e: the Euler's number (approximately 2.71828)
+
+-   k: the number of target molecules observed in the droplet
+
+In ddPCR, the target DNA is typically spread across the droplet population, and after PCR amplification, some droplets will contain no copies of the target, while others will contain one copy or even more .
+And by counting the number of droplets with zero copies (**negative droplets**) and the number of droplets with one or more copies (**positive droplets)**, ddPCR uses the Poisson distribution to estimate the λ, which represents the number of target DNA molecules per droplet.
+
+The key relationship here is that the fraction of positive droplets can be related to the Poisson-distributed number of target molecules in the sample, allowing for the direct calculation of the absolute concentration of target DNA (or gene copy number) in the original sample, without the need for external standards or calibration.
+
+The Poisson model assumes that the DNA molecules are distributed randomly and independently into droplets.
+The number of positive droplets (those that contain at least one copy of the target) and negative droplets (those with no copies of the target) allows for the estimation of the concentration of the target gene in the sample using the following equation:
+
+$$C= -\frac{d}{v}ln(1-\frac{p}{N})$$
+
+Where:
+
+-   N: the number of total droplet
+
+-   p: the number of positive droplet for the target gene
+
+-   v: the volume of a droplet (in micro liter)
+
+-   d: the dilution factor applied to dilute the sample from the stock to the well
+
+This approach allows ddPCR to provide highly accurate, absolute quantification of gene copy numbers in complex samples, even when the target sequence is rare or present in very low quantities, without the need for reference standards or calibration curves.
+
+

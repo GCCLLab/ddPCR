@@ -1,0 +1,80 @@
+# Chapter 7: Applications of ddPCR in Genomic Analysis {.unnumbered}
+
+Digital PCR (ddPCR) enables absolute quantification of nucleic acids without the need for calibration curves.\
+This makes it a powerful tool in genomic applications where precision is critical, such as:
+
+-   **Copy Number Variation (CNV) detection**
+-   **Rare allele or mutation detection**
+
+**Copy Number Variation (CNV) Detection** 
+
+**Copy Number Variation (CNV)** refers to a gain or loss of gene copies in the genome.
+ddPCR quantifies the number of gene copies in a sample and compares it to a **reference gene** with known normal copy number (usually 2).
+
+The relative copy number is calculated as:
+
+$$
+\text{Copy Ratio} = \frac{\text{Target Gene Concentration}}{\text{Reference Gene Concentration}}
+$$
+
+**Example**:
+
+```{r}
+target <- 10.1 # estimated concentration of target gene (copies/μL)
+reference <- 5.0 # estimated concentration of reference gene (copies/μL)
+copy_ratio <- target / reference
+round(copy_ratio, 2)
+```
+
+**Interpretation**
+
+| Copy Ratio | Interpretation        |
+|------------|-----------------------|
+| \~1.0      | Normal diploid copy   |
+| \~0.5      | Heterozygous deletion |
+| \~2.0      | Gene duplication      |
+
+ddPCR is especially useful for detecting subtle CNVs that may not be distinguishable by qPCR or arrays.  
+
+
+**Rare Allele Detection** 
+
+ddPCR can detect low-frequency mutations, even at < 0.1% mutant allele frequency (MAF). This is crucial for applications such as:
+
+-   Detecting resistance mutations in cancer (e.g., EGFR T790M)
+-   Tracking minimal residual disease (MRD)
+-   Analyzing circulating tumor DNA (ctDNA)
+
+**Dual-probe strategy**
+
+Each droplet is tested for both:
+
+-   Wild-type (WT) using one probe (e.g., HEX)
+-   Mutant (MT) using another probe (e.g., FAM)
+-   The Mutant Allele Frequency (MAF) is calculated as:
+
+$$
+\text{MAF} = \frac{\text{Mutanat Copies}}{\text{Mutant Copies + Wild-Type Copies}}
+$$
+
+**Example**:
+
+```{r}
+mutant <- 6
+wt <- 994
+
+maf <- mutant / (mutant + wt)
+round(maf * 100, 3)
+```
+
+This demonstrates ddPCR’s ability to detect rare mutations in a background of wild-type DNA.
+
+**Summary**
+
+| Application           | Measurement                     | ddPCR Advantage                                  |
+| --------------------- | ------------------------------- | ------------------------------------------------ |
+| CNV Detection         | Copy ratio (Target / Reference) | Absolute quantification without a standard curve |
+| Rare Allele Detection | Mutant Allele Frequency (MAF)   | Sensitive detection of <0.1% MAF                 |
+
+
+

@@ -1,0 +1,4 @@
+# Author  {-}
+
+My name is Kyungmin In, and I am the head of the Research Unit at **GCCL** (https://eng.gccl.co.kr/).I have worked as a bioanalytical team leader for many years at several companies. My academic background includes a Ph.D. in molecular biology, with additional studies in immunology. During my Ph.D. in Germany, I focused on researching rare genetic diseases. I am particularly interested in automation and reproducible data generation and analysis for bioanalysis, which has led me to explore tools like **R**. Additionally, I have experience using commercial systems like **Watson LIMS** (Thermo Fisher Scientific) for efficient data management and analysis, in line with the company's goals."
+

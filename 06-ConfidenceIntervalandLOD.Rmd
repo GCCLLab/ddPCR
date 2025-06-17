@@ -1,0 +1,83 @@
+# Chapter 6: Confidence Intervals and Limit of Detection (LoD) {.unnumbered}
+
+In ddPCR, it is important not only to estimate the concentration of the target gene, but also to quantify the **uncertainty** of that estimate. This is typically done by calculating **confidence intervals (CIs)** for the estimated copy number.
+
+**Confidence Interval for Proportion of Positive Droplets**
+
+Let:
+
+-   $N$: total number of droplets
+
+-   $p$: number of positive droplets
+
+Then the observed proportion is:
+
+$$
+\hat{p} = \frac{p}{N}
+$$
+
+The confidence interval for this proportion can be calculated using binomial methods, such as:
+
+-   **Wald method** (simplest, but less accurate when $p$ is near 0 or 1)\
+-   **Wilson score interval**\
+-   **Exact (Clopper-Pearson) method**
+
+We can then transform this interval into a CI for $\lambda$ (CPD), and then into concentration.
+
+**R Example**: Using `binom` Package
+
+```{r}
+library(binom)
+
+N <- 20000
+p <- 200
+p_hat <- p / N
+
+binom.confint(p, N, methods = "exact")
+```
+
+This gives the lower and upper bounds for the proportion of positive droplets.
+
+We then compute:
+
+```{r}
+lambda_lower <- -log(1 - 0.008589)
+lambda_upper <- -log(1 - 0.010316)
+
+v <- 20 / N  # droplet volume
+d <- 1       # no dilution
+conc_lower <- lambda_lower * d / v
+conc_upper <- lambda_upper * d / v
+
+round(c(conc_lower, conc_upper), 2)
+```
+
+**Interpretation**
+
+-   The estimated concentration is about **10.05 copies/μL**
+
+-   The 95% confidence interval is roughly **[8.6, 10.8] copies/μL**
+
+-   The uncertainty reflects both the number of positive droplets and the total droplet count
+
+**Defining Limit of Detection (LoD)**
+
+**LoD** is often defined as the lowest concentration that gives a statistically significant number of positive droplets, with an acceptably low false negative rate.
+
+A common approach is:
+
+-   Simulate or calculate the probability of detecting at least one positive droplet at a given $\lambda$
+-   Require that this probability exceeds 1 - α, e.g., 95%
+
+This was demonstrated in the previous chapter using:
+
+$$
+P(X=0) = e^{-\lambda}, \ \lambda_{LOD} = -ln(\alpha)
+$$
+
+**Summary** 
+
+-   Confidence intervals for ddPCR results can be constructed by first computing the CI for the proportion of positive droplets.
+-   The LoD can be estimated as the smallest concentration that still results in a sufficiently high probability of detection.
+
+This closes the foundational mathematical modeling of ddPCR.

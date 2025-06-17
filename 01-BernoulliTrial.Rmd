@@ -1,0 +1,41 @@
+# Chapter 1: Bernoulli Trial {.unnumbered}
+
+A Bernoulli trial is a random experiment where there are only two possible outcomes: **success** or **failure**.\
+The probability of success is denoted by $p$, and the probability of failure is $1 - p$.
+
+To make this concept intuitive, imagine a game where you roll a fair six-sided die.\
+You win a prize if the number is a multiple of 3, which includes 3 and 6.\
+There are two favorable outcomes out of six:\
+$$
+p = \frac{2}{6} = \frac{1}{3}
+$$
+
+Let $X$ be a random variable that represents the outcome of a Bernoulli trial:
+
+-   $X = 1$ if the outcome is a success
+
+-   $X = 0$ if the outcome is a failure
+
+The probability mass function (PMF) of $X$ is:
+
+$$
+P(X = x) = p^x (1 - p)^{1 - x}, \quad x \in \{0, 1\}
+$$
+
+**Example Calculation**: 
+
+Let $p = \frac{1}{3}$
+
+-   $P(X = 1) = \left(\frac{1}{3}\right)^1 \cdot \left(\frac{2}{3}\right)^0 = \frac{1}{3}$
+-   $P(X = 0) = \left(\frac{1}{3}\right)^0 \cdot \left(\frac{2}{3}\right)^1 = \frac{2}{3}$
+
+**In R**:
+
+```{r}
+p <- 1/3
+c(success = p, failure = 1 - p)
+```
+
+A Bernoulli trial is the foundation for many other distributions in probability theory, including the binomial distribution, which models multiple independent Bernoulli trials.
+
+In the context of ddPCR, each droplet behaves like a Bernoulli trial: it either contains one or more copies of the target DNA (success), or it contains none (failure).

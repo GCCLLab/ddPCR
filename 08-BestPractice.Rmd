@@ -1,0 +1,70 @@
+# Chapter 8: Quality Control and Best Practices in ddPCR {.unnumbered}
+
+While digital PCR (ddPCR) provides highly precise quantification, ensuring data quality requires careful experimental design, appropriate controls, and post-run validation.  
+This chapter outlines essential quality control (QC) considerations and best practices to ensure reliable and reproducible ddPCR results.
+
+**1. Droplet Quality and Thresholding**
+-   **Minimum Droplet Count**:
+    A minimum of **10,000 accepted droplets per well** is recommended for statistically robust quantification.\
+    Fewer droplets result in wider confidence intervals and increased error.
+
+-   **Rain Detection**:
+    "Rain" refers to droplets with intermediate fluorescence that fall between the positive and negative peaks.\
+    These droplets may result from:
+
+    -   Poor probe or primer efficiency
+    -   Suboptimal thermal cycling
+    -   Sample degradation or inhibition
+
+> Inspection and adjusting thresholds may be necessary.
+
+**2. Controls**
+
+-   **No Template Control (NTC)**:
+    Included in every run to monitor contamination.
+    Expected result: **0 positive droplets**.
+
+-   **Positive Control**:
+    A sample with a known concentration of target DNA, used to confirm assay performance.
+
+-   **Reference Gene Control**:
+    In CNV assays, use a **stable reference gene** (e.g., RPP30 or RNaseP) to normalize copy number.
+
+**3. Assessing Reproducibility**
+
+Run **technical replicates** to ensure precision and identify potential outliers.
+
+```{r}
+replicates <- c(10.2, 10.4, 9.9)
+mean(replicates) 
+sd(replicates) 
+cv <- sd(replicates) / mean(replicates) * 100
+round(cv, 2) # CV (%) < 10% is ideal
+```
+
+**4. False Positives and False Negatives**
+
+| Error Type | Possible Cause | Mitigation Strategy |
+|------------------|-----------------------------|-------------------------|
+| False Positive | Contamination, misclassified "rain" droplets | Use strict NTC, adjust threshold |
+| False Negative | Poor droplet generation, failed amplification | Increase input DNA, optimize conditions |
+
+> For rare mutation detection, even a single false positive can affect interpretation — validation is essential.
+
+**5. LoD Confirmation via Dilution Series**
+
+To confirm the Limit of Detection (LoD), use a serial dilution of a known template and assess the lowest concentration at which detection is consistent.
+
+-   Run 3 or more replicates per dilution level
+-   LoD is typically the lowest level at which all replicates are positive
+
+| Practice             | Recommendation                          |
+|----------------------|-----------------------------------------|
+| Droplet Count        | \>10,000 per well                       |
+| NTC                  | Should have 0 positive droplets         |
+| Positive Control     | Include known copy number sample        |
+| Replicates           | Use technical duplicates or triplicates |
+| Threshold Inspection | Adjust for rain manually if needed      |
+| LoD Validation       | Perform dilution series experiments     |
+
+By incorporating these best practices, we can minimize experimental variability, reduce false results, and ensure that ddPCR data are reliable and publication-ready.

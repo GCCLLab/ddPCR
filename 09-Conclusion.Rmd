@@ -1,0 +1,17 @@
+# Chapter 9: Conclusion {.unnumbered}
+
+Digital PCR (ddPCR) represents a significant advancement in nucleic acid quantification by enabling absolute measurements without the need for standard curves.\
+Through precise partitioning and the application of Poisson statistics, ddPCR offers unparalleled sensitivity and reproducibility in genomic analysis.
+
+In this book, we covered:
+
+-   The mathematical foundation of ddPCR using Bernoulli, Binomial, and Poisson models\
+-   How to estimate copy number and concentration from droplet counts\
+-   The relationship between copy per droplet (CPD) and detection probability\
+-   Methods to calculate confidence intervals and define detection limits\
+-   Applications in CNV analysis and rare allele quantification\
+-   Quality control strategies to ensure reliable ddPCR results
+
+Whether used for cancer diagnostics, gene dosage analysis, or pathogen detection, ddPCR provides a powerful, robust, and accessible platform for molecular biology.
+
+We hope this resource has provided you with both the theoretical understanding and practical tools to confidently apply ddPCR in your own research or clinical workflows.

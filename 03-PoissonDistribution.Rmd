@@ -1,0 +1,89 @@
+# Chapter 3: Poisson Distribution {.unnumbered}
+
+The **Poisson distribution** models the probability of a given number of events occurring in a fixed interval of time or space, assuming that the events occur independently and at a constant average rate.
+
+The probability mass function is:
+
+$$
+P(X = k) = \frac{e^{-\lambda} \cdot \lambda^k}{k!}, \quad k = 0, 1, 2, ...
+$$
+
+Where:
+
+-   $X$ is the number of events (e.g., target copies per droplet),\
+-   $\lambda$ is the average number of events per interval (copy per droplet in ddPCR),\
+-   $e$ is Euler’s number, approximately 2.71828.
+
+**When to Use the Poisson Distribution**
+
+Poisson distribution is appropriate under the following conditions:
+
+-    Events are rare and occur independently.
+
+-   The probability of two or more events happening simultaneously is negligible.
+
+-   The average event rate ($\lambda$) is constant.
+
+-   The number of possible trials is large, and the success probability is small.
+
+**Poisson Approximation to Binomial**
+
+When:
+
+-   $n$ is large (e.g., \> 20),
+
+-   $p$ is small (e.g., \< 0.01), and
+
+-   $\lambda = n \cdot p$ is moderate (e.g., ≤ 5),
+
+Then the binomial distribution $B(n, p)$ can be approximated by a poisson distribution with parameter $\lambda = np$.
+
+**Example 1**: Rare Event Detection 
+
+Probability that at least 4 sets of triplets are born, assuming a triplet birth probability of 0.0001 and 10,000 births:
+
+**In R**:
+
+```{r}
+lambda <- 10000 * 0.0001  # λ = np = 1
+1 - ppois(3, lambda)       # P(X ≥ 4)
+```
+
+**Example 2**: Defective Products
+
+If 2% of products are defective, and we sample 100 products, what is the probability that exactly 3 are defective?
+
+```{r}
+lambda <- 100 * 0.02
+dpois(3, lambda)
+```
+
+**Example 3**: Typos on a Page
+
+If the number of typos per page follows Poisson(λ = 1), what's the probability of at least one typo?
+
+```{r}
+1 - dpois(0, 1) 
+```
+
+**Example 4**: No Accidents Today 
+
+If the average number of accidents per day on a highway is λ = 3, the probability of no accidents today is:
+
+```{r}
+dpois(0, 3)
+```
+
+**Interpretation in ddPCR** 
+
+In ddPCR, the number of target molecules per droplet follows a Poisson distribution with parameter $\lambda$. This is because each droplet is randomly and independently assigned zero or more DNA molecules. The key relationship used in ddPCR is:
+
+$$
+P(\text{no target  in  droplet}) = P(X=0) = e^{-\lambda}
+$$ Which leads to the estimate:
+
+$$
+\lambda = -ln(\frac{\text{number of negative droplets}}{\text{total number of droplets}})
+$$
+
+This formula forms the foundation of **absolute quantification** in ddPCR, as we will explore in the next chapter.
